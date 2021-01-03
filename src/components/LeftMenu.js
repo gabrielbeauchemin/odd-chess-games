@@ -11,17 +11,11 @@ const LeftMenu = () => {
   const history = useHistory();
   return (
     <Menu mode={md ? "horizontal" : "inline"}>
-      <Menu.Item key="mail">
-        <a href="/welcome">Home</a>
-      </Menu.Item>
-      <SubMenu key="sub1" title={<span>Text Transformation</span>}>
-        <Menu.Item key="setting:4" onClick={() => history.push("/christmas")}>
-          Find Christmas words
+      <SubMenu key="sub1" title={<span>Games</span>}>
+        <Menu.Item key="setting:1" onClick={() => history.push("/who-won")}>
+          Who won
         </Menu.Item>
       </SubMenu>
-      <Menu.Item key="contact">
-        <a href="/contact">Contact us</a>
-      </Menu.Item>
     </Menu>
   );
 };

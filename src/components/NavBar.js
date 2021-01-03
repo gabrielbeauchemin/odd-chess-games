@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import LeftMenu from "./LeftMenu";
 import { Drawer, Button } from "antd";
-import logo from "../icons/chess_piece_king.png";
+import logo from "../icons/omega-chess-icon.png";
 import "./NavBar.css";
 
 //Reference: https://github.com/Rupinderthind/Ant_design_navbar/blob/master/src/App.js
