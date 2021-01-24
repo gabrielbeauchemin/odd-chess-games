@@ -7,7 +7,7 @@ type WelcomePageProps = {};
 export function WelcomePage(props: WelcomePageProps) {
   return (
     <Page>
-      <PageContent>Welcome</PageContent>i
+      <PageContent>Welcome</PageContent>
     </Page>
   );
 }
