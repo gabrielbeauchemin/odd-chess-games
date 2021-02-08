@@ -22,6 +22,10 @@ span {
   color: var(--color-theme2);
 }
 
+.ant-menu-submenu-active span {
+  color: #a15c38;
+}
+
 .ant-menu-item {
   background-color: var(--color-theme2);
   margin: 0 !important;
