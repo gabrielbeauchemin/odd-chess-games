@@ -10,7 +10,7 @@ const LeftMenu = () => {
   const { md } = useBreakpoint();
   const history = useHistory();
   return (
-    <Menu mode={md ? "horizontal" : "inline"}>
+    <Menu mode={md ? "horizontal" : "inline"} className="main-background-color">
       <SubMenu key="sub1" title={<span>Games</span>}>
         <Menu.Item key="setting:1" onClick={() => history.push("/who-won")}>
           Who won
