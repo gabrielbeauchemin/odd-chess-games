@@ -1,0 +1,9 @@
+.GameImages{
+    display: flex;
+    width: 25%;
+    justify-content: space-evenly;
+}
+
+.GameImage{
+    width: 30%;
+}

@@ -1,5 +1,4 @@
-import React, { ReactNode } from "react";
-import Navbar from "../components/NavBar";
+import { ReactNode } from "react";
 
 type PageContentProps = {
   children?: ReactNode;
