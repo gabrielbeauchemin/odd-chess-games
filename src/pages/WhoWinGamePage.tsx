@@ -3,13 +3,11 @@ import { ChessBoard } from "../components/ChessBoard";
 import { Page } from "./Page";
 import { PageContent } from "./PageContent";
 
-type WhoWinGamePageProps = {};
-
-export function WhoWinGamePage(props: WhoWinGamePageProps) {
+export function WhoWinGamePage() {
   return (
     <Page>
       <PageContent>
-        <div>Who won game</div>
+        <div>Who win game</div>
         <div>
           <ChessBoard />
         </div>

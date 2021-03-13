@@ -12,9 +12,10 @@ export function WelcomePage() {
           You will find on this site special chess games that I could not find
           else where. Enjoy!
         </p>
+        <br />
         <div className={style.GameImages}>
           <div>
-            <a href="/who-won">
+            <a href="/who-win">
               <img src="whowins.png" width="100%" />
             </a>
           </div>

@@ -1,5 +1,4 @@
 import { useHistory } from "react-router-dom";
-import React from "react";
 import { Menu, Grid } from "antd";
 const SubMenu = Menu.SubMenu;
 
@@ -12,8 +11,8 @@ const LeftMenu = () => {
   return (
     <Menu mode={md ? "horizontal" : "inline"} className="main-background-color">
       <SubMenu key="sub1" title={<span>Games</span>}>
-        <Menu.Item key="setting:1" onClick={() => history.push("/who-won")}>
-          Who won
+        <Menu.Item key="setting:1" onClick={() => history.push("/who-win")}>
+          Who win
         </Menu.Item>
       </SubMenu>
     </Menu>

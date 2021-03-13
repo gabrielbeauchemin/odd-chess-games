@@ -1,15 +1,14 @@
 import "./App.css";
 import { WelcomePage } from "./pages/WelcomePage";
-import { WhoWinGamePage as WhoWonGamePage } from "./pages/WhoWonGamePage";
+import { WhoWinGamePage as WhoWonGamePage } from "./pages/WhoWinGamePage";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import React from "react";
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={WelcomePage} />
-        <Route exact path="/who-won" component={WhoWonGamePage} />
+        <Route exact path="/who-win" component={WhoWonGamePage} />
       </Switch>
     </BrowserRouter>
   );
