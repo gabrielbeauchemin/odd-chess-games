@@ -7,7 +7,7 @@ export function WhoWinGamePage() {
   return (
     <Page>
       <PageContent>
-        <div>Who win game</div>
+        <div>Who wins game</div>
         <div>
           <ChessBoard />
         </div>

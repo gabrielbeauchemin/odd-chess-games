@@ -15,7 +15,7 @@ export function WelcomePage() {
         <br />
         <div className={style.GameImages}>
           <div>
-            <a href="/who-win">
+            <a href="/who-wins">
               <img src="whowins.png" width="100%" />
             </a>
           </div>

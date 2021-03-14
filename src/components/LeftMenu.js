@@ -11,8 +11,8 @@ const LeftMenu = () => {
   return (
     <Menu mode={md ? "horizontal" : "inline"} className="main-background-color">
       <SubMenu key="sub1" title={<span>Games</span>}>
-        <Menu.Item key="setting:1" onClick={() => history.push("/who-win")}>
-          Who win
+        <Menu.Item key="setting:1" onClick={() => history.push("/who-wins")}>
+          Who wins
         </Menu.Item>
       </SubMenu>
     </Menu>
