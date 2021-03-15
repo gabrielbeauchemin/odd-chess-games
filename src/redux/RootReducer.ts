@@ -1,8 +1,4 @@
-const initial_state = {};
+import { combineReducers } from "redux";
+import { TacticsReducer } from "./tactics/TacticsReducer";
 
-export const rootReducer = (state = initial_state, action: any) => {
-  switch (action) {
-    default:
-      return state;
-  }
-};
+export const rootReducer = combineReducers({ tactics: TacticsReducer });

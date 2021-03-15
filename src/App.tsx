@@ -1,6 +1,6 @@
 import "./App.css";
 import { WelcomePage } from "./pages/WelcomePage";
-import { WhoWinGamePage as WhoWonGamePage } from "./pages/WhoWinGamePage";
+import WhoWinsGamePage from "./pages/WhoWinGamePage";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={WelcomePage} />
-        <Route exact path="/who-wins" component={WhoWonGamePage} />
+        <Route exact path="/who-wins" component={WhoWinsGamePage} />
       </Switch>
     </BrowserRouter>
   );

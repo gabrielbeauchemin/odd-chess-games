@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import { ChessBoard } from "../components/ChessBoard";
+import { WhoWinsModel } from "../redux/tactics/WhoWinsModel";
+import { fetchRandomWhoWinsTacticsAction } from "../redux/tactics/WhoWinsTacticsActions";
 import { Page } from "./Page";
 import { PageContent } from "./PageContent";
 
-export function WhoWinGamePage() {
+type WhoWinsGamePageProps = {
+  tactics: WhoWinsModel[];
+  fetchRandomWhoWinsTactics: () => void;
+};
+
+function WhoWinsGamePage(props: WhoWinsGamePageProps) {
+  useEffect(() => props.fetchRandomWhoWinsTactics(), [props]);
   return (
     <Page>
       <PageContent>
@@ -15,3 +24,18 @@ export function WhoWinGamePage() {
     </Page>
   );
 }
+
+function mapStateToProps(state: any) {
+  return {
+    tactics: state.tactics.whoWins,
+  };
+}
+const mapDispatchToProps = (dispatch: any, ownProps: any) => {
+  return {
+    fetchRandomWhoWinsTactics: () => {
+      dispatch(fetchRandomWhoWinsTacticsAction(10));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(WhoWinsGamePage);

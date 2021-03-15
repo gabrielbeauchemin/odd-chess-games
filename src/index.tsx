@@ -5,9 +5,13 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { rootReducer } from "./redux/RootReducer";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import { applyMiddleware, createStore } from "redux";
+import createSagaMiddleware from "redux-saga";
+import rootSaga from "./redux/RootSaga";
 
-const store = createStore(rootReducer);
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
+sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
   <React.StrictMode>
