@@ -12,7 +12,8 @@ type WhoWinsGamePageProps = {
 };
 
 function WhoWinsGamePage(props: WhoWinsGamePageProps) {
-  useEffect(() => props.fetchRandomWhoWinsTactics(), [props]);
+  useEffect(props.fetchRandomWhoWinsTactics, []);
+  console.log(props.tactics);
   return (
     <Page>
       <PageContent>
@@ -30,10 +31,10 @@ function mapStateToProps(state: any) {
     tactics: state.tactics.whoWins,
   };
 }
-const mapDispatchToProps = (dispatch: any, ownProps: any) => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
     fetchRandomWhoWinsTactics: () => {
-      dispatch(fetchRandomWhoWinsTacticsAction(10));
+      dispatch(fetchRandomWhoWinsTacticsAction(20));
     },
   };
 };

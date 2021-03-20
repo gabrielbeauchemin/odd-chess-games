@@ -19,10 +19,10 @@ export const RECEIVE_WHO_WINS_TACTICS_ACTION =
   "RECEIVE_WHO_WINS_TACTICS_ACTION";
 export type ReceiveWhoWinsTacticsAction = {
   type: typeof RECEIVE_WHO_WINS_TACTICS_ACTION;
-  tactics: WhoWinsModel[];
+  tactics: { [key: string]: WhoWinsModel };
 };
 export function receiveWhoWinsTacticsAction(
-  tactics: WhoWinsModel[]
+  tactics: { [key: string]: WhoWinsModel }
 ): ReceiveWhoWinsTacticsAction {
   return {
     type: RECEIVE_WHO_WINS_TACTICS_ACTION,

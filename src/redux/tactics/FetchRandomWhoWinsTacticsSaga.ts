@@ -1,26 +1,31 @@
 import { put, takeLatest, call } from "redux-saga/effects";
 import { WhoWinsModel } from "./WhoWinsModel";
+import { getRandomWhoWinsTactics } from "./TacticsProxy";
 import {
   FetchRandomWhoWinsTacticsAction,
+  FETCH_RANDOM_WHO_WINS_TACTICS_ACTION,
   receiveWhoWinsTacticsAction,
 } from "./WhoWinsTacticsActions";
-import { getRandomWhoWinsTactics } from "./TacticsProxy";
 
-function* fetchRandomWhoWinsTactics(action: FetchRandomWhoWinsTacticsAction) {
+function* fetchRandomWhoWinsTacticsSaga(action: FetchRandomWhoWinsTacticsAction) {
   try {
-    const tactics: WhoWinsModel[] = yield call(
+    const tactics: { [key: string]: WhoWinsModel } = yield call(
       getRandomWhoWinsTactics,
       action.nbrTactics
     );
     yield put(receiveWhoWinsTacticsAction(tactics));
   } catch (e) {
+      debugger;
     console.log(e.message);
     yield put({ type: "USER_FETCH_FAILED" });
   }
 }
 
-function* fetchRandomWhoWinsTacticsSaga() {
-  yield takeLatest("USER_FETCH_REQUESTED", fetchRandomWhoWinsTactics);
+function* watchFetchRandomWhoWinsTacticsSaga() {
+  yield takeLatest(
+    FETCH_RANDOM_WHO_WINS_TACTICS_ACTION,
+    fetchRandomWhoWinsTacticsSaga
+  );
 }
 
-export default fetchRandomWhoWinsTacticsSaga;
+export default watchFetchRandomWhoWinsTacticsSaga;

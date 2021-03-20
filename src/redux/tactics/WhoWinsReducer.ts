@@ -14,7 +14,7 @@ export const WhoWinsReducer = (
     case RECEIVE_WHO_WINS_TACTICS_ACTION:
       return [
         ...state,
-        ...action.tactics.filter(
+        ...Object.values(action.tactics).filter(
           (tactic) =>
             !state.some((existingTactic) => tactic.fen === existingTactic.fen)
         ),

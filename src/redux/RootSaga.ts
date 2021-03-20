@@ -1,6 +1,6 @@
-import fetchRandomWhoWinsTacticsSaga from "./tactics/FetchRandomWhoWinsTacticsSaga";
 import { all } from "redux-saga/effects";
+import watchFetchRandomWhoWinsTacticsSaga from "./tactics/FetchRandomWhoWinsTacticsSaga";
 
 export default function* rootSaga() {
-  yield all([fetchRandomWhoWinsTacticsSaga]);
+  yield all([watchFetchRandomWhoWinsTacticsSaga()]);
 }
