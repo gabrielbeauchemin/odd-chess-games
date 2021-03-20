@@ -13,7 +13,6 @@ type WhoWinsGamePageProps = {
 
 function WhoWinsGamePage(props: WhoWinsGamePageProps) {
   useEffect(props.fetchRandomWhoWinsTactics, []);
-  console.log(props.tactics);
   return (
     <Page>
       <PageContent>
