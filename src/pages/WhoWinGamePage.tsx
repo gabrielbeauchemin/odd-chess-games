@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { ChessBoard } from "../components/ChessBoard";
+import {WhoWinsGame} from "../components/WhoWinsGame";
 import { WhoWinsModel } from "../redux/tactics/WhoWinsModel";
 import { fetchRandomWhoWinsTacticsAction } from "../redux/tactics/WhoWinsTacticsActions";
 import { Page } from "./Page";
@@ -16,10 +16,7 @@ function WhoWinsGamePage(props: WhoWinsGamePageProps) {
   return (
     <Page>
       <PageContent>
-        <div>Who wins game</div>
-        <div>
-          <ChessBoard />
-        </div>
+          <WhoWinsGame />
       </PageContent>
     </Page>
   );
