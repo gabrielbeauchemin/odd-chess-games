@@ -5,13 +5,14 @@ import { MinutesCounter } from "./MinutesCounter";
 
 export function WhoWinsGame() {
   const [gameStarted, setGameStarted] = useState(false);
+  const [counterId, setCounterId] = useState<string | undefined>(undefined);
   return (
     <>
       <h3>Who wins?</h3>
       <div>
         <div className="flex" style={{ justifyContent: "space-between" }}>
           <div>
-            <MinutesCounter seconds={180} />
+              <MinutesCounter seconds={180} counterId={counterId} onFinish={() => console.log("Finished!")}/>
           </div>
           <div>Score: 0</div>
         </div>
@@ -44,7 +45,13 @@ export function WhoWinsGame() {
             </div>
             <div>Don't be mistaken or it is game over.</div>
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <Button size="large" onClick={() => setGameStarted(true)}>
+              <Button
+                size="large"
+                onClick={() => {
+                  setGameStarted(true);
+                  setCounterId(uuidv4());
+                }}
+              >
                 Start
               </Button>
             </div>
@@ -53,4 +60,12 @@ export function WhoWinsGame() {
       </div>
     </>
   );
+}
+
+function uuidv4() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var r = (Math.random() * 16) | 0,
+      v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
 }
