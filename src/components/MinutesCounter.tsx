@@ -17,10 +17,9 @@ export function MinutesCounter(props: MinutesConterProps) {
       if (secondsLeft > 0 && beginDate != undefined) {
         const timePassed = Date.now() - beginDate;
         const secondsPassed = Math.floor(timePassed / 1000);
-        let secondsLeftRes = props.seconds - secondsPassed;
-        if (secondsLeftRes < 0) secondsLeftRes = 0;
-        setSecondsLeft(secondsLeftRes);
-      } else if (props.onFinish != undefined && secondsLeft <= 0) {
+        setSecondsLeft(props.seconds - secondsPassed);
+      } else if (props.onFinish != undefined && secondsLeft == 0) {
+        setSecondsLeft(-1);
         props.onFinish();
         clearInterval(timerId);
       }
@@ -37,6 +36,7 @@ export function MinutesCounter(props: MinutesConterProps) {
 }
 
 function secondsToMinutesDisplay(seconds: number) {
+  if (seconds < 0) return "0:00";
   const minutesDisplay = Math.floor(seconds / 60);
   const secondsDisplay = seconds - minutesDisplay * 60;
   const secondsDisplayPadding = secondsDisplay < 10 ? "0" : "";

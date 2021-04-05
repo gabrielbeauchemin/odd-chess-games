@@ -1,25 +1,57 @@
 import { WhoWinsModel } from "./WhoWinsModel";
 import {
+  PopWhoWinsTacticsAction,
+  POP_WHO_WINS_TACTICS_ACTION,
   ReceiveWhoWinsTacticsAction,
   RECEIVE_WHO_WINS_TACTICS_ACTION,
 } from "./WhoWinsTacticsActions";
 
-const initial_state: WhoWinsModel[] = [];
+type ReducerType = {
+  all: WhoWinsModel[];
+  current: WhoWinsModel | null;
+};
+
+type ReducerAction = ReceiveWhoWinsTacticsAction | PopWhoWinsTacticsAction;
+
+const initial_state: ReducerType = {
+  all: [],
+  current: null,
+};
 
 export const WhoWinsReducer = (
-  state: WhoWinsModel[] = initial_state,
-  action: ReceiveWhoWinsTacticsAction
-): WhoWinsModel[] => {
+  state: ReducerType = initial_state,
+  action: ReducerAction
+): ReducerType => {
   switch (action.type) {
     case RECEIVE_WHO_WINS_TACTICS_ACTION:
-      return [
+      return {
         ...state,
-        ...Object.values(action.tactics).filter(
-          (tactic) =>
-            !state.some((existingTactic) => tactic.fen === existingTactic.fen)
-        ),
-      ];
+        all: [
+          ...state.all,
+          ...Object.values(action.tactics).filter((tactic) =>
+            filterExistingTactics(tactic, state.all)
+          ),
+        ],
+      };
+    case POP_WHO_WINS_TACTICS_ACTION: {
+        const current = state.all.pop();
+        if(!current) return state;
+        return {
+            ...state,
+            all: state.all,
+            current
+        }
+    }
     default:
       return state;
   }
 };
+
+function filterExistingTactics(
+  tactic: WhoWinsModel,
+  existingTactics: WhoWinsModel[]
+) {
+  return !existingTactics.some(
+    (existingTactic) => tactic.fen === existingTactic.fen
+  );
+}

@@ -29,3 +29,9 @@ export function receiveWhoWinsTacticsAction(
     tactics,
   };
 }
+
+export const POP_WHO_WINS_TACTICS_ACTION = "POP_WHO_WINS_TACTICS_ACTION";
+export type PopWhoWinsTacticsAction = {type: typeof POP_WHO_WINS_TACTICS_ACTION};
+export function popWhoWinsTacticsAction(): PopWhoWinsTacticsAction {
+    return {type: POP_WHO_WINS_TACTICS_ACTION};
+}

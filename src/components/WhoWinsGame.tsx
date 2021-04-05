@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Modal } from "antd";
 import React, { useState } from "react";
 import { ChessBoard } from "./ChessBoard";
 import { MinutesCounter } from "./MinutesCounter";
@@ -6,15 +6,33 @@ import { MinutesCounter } from "./MinutesCounter";
 export function WhoWinsGame() {
   const [gameStarted, setGameStarted] = useState(false);
   const [counterId, setCounterId] = useState<string | undefined>(undefined);
+  const [score] = useState(0);
+  const [bestScore, setBestScore] = useState(0);
   return (
     <>
       <h3>Who wins?</h3>
       <div>
         <div className="flex" style={{ justifyContent: "space-between" }}>
           <div>
-              <MinutesCounter seconds={180} counterId={counterId} onFinish={() => console.log("Finished!")}/>
+            <MinutesCounter
+              seconds={180}
+              counterId={counterId}
+              onFinish={() => {
+                setGameStarted(false);
+                if (score > bestScore) setBestScore(score);
+                Modal.info({
+                  title: `Finished! Your score is ${score}.`,
+                  content: null,
+                  onOk() {},
+                });
+              }}
+            />
           </div>
-          <div>Score: 0</div>
+            <div className="flex">
+          <div>Score: {score}</div>
+          <div>&nbsp; Record: {bestScore}</div>
+            </div>
+
         </div>
         <ChessBoard
           fen={
