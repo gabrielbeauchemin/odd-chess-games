@@ -15,7 +15,6 @@ function* fetchRandomWhoWinsTacticsSaga(action: FetchRandomWhoWinsTacticsAction)
     );
     yield put(receiveWhoWinsTacticsAction(tactics));
   } catch (e) {
-      debugger;
     console.log(e.message);
     yield put({ type: "USER_FETCH_FAILED" });
   }

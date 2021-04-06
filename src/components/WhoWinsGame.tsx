@@ -1,12 +1,23 @@
 import { Button, Modal } from "antd";
 import React, { useState } from "react";
+import { WhoWinsModel } from "../redux/tactics/WhoWinsModel";
 import { ChessBoard } from "./ChessBoard";
 import { MinutesCounter } from "./MinutesCounter";
 
-export function WhoWinsGame() {
+type WhoWinsGameProps = {
+  currentTactic: WhoWinsModel | null;
+  popWhoWinsTactics: () => void;
+  receiveUserGuess: (
+    isWhiteWinning: boolean,
+    incrementScore: () => void,
+    onUserGuessFailure: (message: string) => void
+  ) => void;
+};
+
+export function WhoWinsGame(props: WhoWinsGameProps) {
   const [gameStarted, setGameStarted] = useState(false);
   const [counterId, setCounterId] = useState<string | undefined>(undefined);
-  const [score] = useState(0);
+  const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
   return (
     <>
@@ -28,15 +39,16 @@ export function WhoWinsGame() {
               }}
             />
           </div>
-            <div className="flex">
-          <div>Score: {score}</div>
-          <div>&nbsp; Record: {bestScore}</div>
-            </div>
-
+          <div className="flex">
+            <div>Score: {score}</div>
+            <div>&nbsp; Record: {bestScore}</div>
+          </div>
         </div>
         <ChessBoard
           fen={
-            "r1b1kbnr/pppq1pp1/2n1p2p/1B6/5B2/2NP1N2/PPP2PPP/R2QK2R b KQkq - 1 7"
+            props.currentTactic !== null
+              ? props.currentTactic.fen
+              : "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
           }
           viewOnly={true}
         />
@@ -47,10 +59,36 @@ export function WhoWinsGame() {
           <div>
             <div>White to play. Who should win?</div>
             <div className="flex" style={{ justifyContent: "space-evenly" }}>
-              <Button size="large" style={{ backgroundColor: "white" }}>
+              <Button
+                size="large"
+                style={{ backgroundColor: "white" }}
+                onClick={() =>
+                  props.receiveUserGuess(
+                    true,
+                    () => setScore(score + 1),
+                    (message) =>
+                      Modal.error({
+                        title: message,
+                      })
+                  )
+                }
+              >
                 White
               </Button>
-              <Button size="large" style={{ backgroundColor: "black" }}>
+              <Button
+                size="large"
+                style={{ backgroundColor: "black" }}
+                onClick={() =>
+                  props.receiveUserGuess(
+                    false,
+                    () => setScore(score + 1),
+                    (message) =>
+                      Modal.error({
+                        title: message,
+                      })
+                  )
+                }
+              >
                 Black
               </Button>
             </div>
@@ -66,6 +104,7 @@ export function WhoWinsGame() {
               <Button
                 size="large"
                 onClick={() => {
+                  props.popWhoWinsTactics();
                   setGameStarted(true);
                   setCounterId(uuidv4());
                 }}
