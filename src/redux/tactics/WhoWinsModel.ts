@@ -1,4 +1,4 @@
 export type WhoWinsModel = {
-  eval: number;
+  eval: string;
   fen: string;
 };
