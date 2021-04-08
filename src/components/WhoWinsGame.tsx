@@ -1,6 +1,7 @@
 import { Button, Modal } from "antd";
 import React, { useState } from "react";
 import { WhoWinsModel } from "../redux/tactics/WhoWinsModel";
+import { uuidv4 } from "../util/uuid";
 import { ChessBoard } from "./ChessBoard";
 import { MinutesCounter } from "./MinutesCounter";
 
@@ -19,6 +20,12 @@ export function WhoWinsGame(props: WhoWinsGameProps) {
   const [counterId, setCounterId] = useState<string | undefined>(undefined);
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
+  const onUserGuessFailure = (message: string) => {
+    setGameStarted(false);
+    Modal.error({
+      title: message,
+    });
+  };
   return (
     <>
       <h3>Who wins?</h3>
@@ -51,13 +58,17 @@ export function WhoWinsGame(props: WhoWinsGameProps) {
               : "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
           }
           viewOnly={true}
+          orientation={getSideToPlayFromFen(props.currentTactic?.fen)}
         />
       </div>
       <br />
       <div>
-        {gameStarted ? (
+        {gameStarted && props.currentTactic ? (
           <div>
-            <div>White to play. Who should win?</div>
+            <div>
+              {toTitleCase(getSideToPlayFromFen(props.currentTactic.fen))} to
+              play. Who should win?
+            </div>
             <div className="flex" style={{ justifyContent: "space-evenly" }}>
               <Button
                 size="large"
@@ -66,10 +77,7 @@ export function WhoWinsGame(props: WhoWinsGameProps) {
                   props.receiveUserGuess(
                     true,
                     () => setScore(score + 1),
-                    (message) =>
-                      Modal.error({
-                        title: message,
-                      })
+                    onUserGuessFailure
                   )
                 }
               >
@@ -82,10 +90,7 @@ export function WhoWinsGame(props: WhoWinsGameProps) {
                   props.receiveUserGuess(
                     false,
                     () => setScore(score + 1),
-                    (message) =>
-                      Modal.error({
-                        title: message,
-                      })
+                    onUserGuessFailure
                   )
                 }
               >
@@ -119,10 +124,15 @@ export function WhoWinsGame(props: WhoWinsGameProps) {
   );
 }
 
-function uuidv4() {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-    var r = (Math.random() * 16) | 0,
-      v = c === "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
+function getSideToPlayFromFen(fen: string | undefined) {
+  if (fen === undefined || fen.split(" ")[1] == "w") {
+    return "white";
+  }
+  return "black";
+}
+
+function toTitleCase(str: string) {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
 }

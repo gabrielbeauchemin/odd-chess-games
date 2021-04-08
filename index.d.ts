@@ -6,6 +6,7 @@ declare module "react-chessground" {
     width: string;
     height: string;
     viewOnly? : boolean;
+    orientation? : 'white' | 'black';
     movable?: {free: boolean};
     onMove?: (from: string, to: string) => void;
     randomMove?: (moves: string[], move: string) => void;
