@@ -18,37 +18,54 @@ function* receiveUserGuessWhoWinsSaga(action: ReceiveUserGuessWhoWinsAction) {
   if (tactics.length < 10) {
     put(fetchRandomWhoWinsTacticsAction(20));
   }
-  if (isUserEvaluationValid(action.isWhiteWinning, currentTactic.eval)) {
+  if (isUserEvaluationValid(action.isWhiteWinning, currentTactic)) {
     action.incrementScore();
     message.success(
-      `Correct! The engine evaluation for this position was ${evalToString(
-        currentTactic.eval
+      `Correct! The engine evaluation for this position is ${evalToString(
+        currentTactic.eval, currentTactic
       )}.`
     );
     yield put(popWhoWinsTacticsAction());
   } else {
     action.onUserGuessFailure(
-      `Game over! The engine evaluation for this position was ${evalToString(
-        currentTactic.eval
+      `Game over! The engine evaluation for this position is ${evalToString(
+        currentTactic.eval, currentTactic
       )}.`
     );
   }
 }
 
-function isUserEvaluationValid(doUserThinkWhiteWon: boolean, realEval: string) {
-  if (realEval.includes("#")) {
-    return realEval.includes("-") !== doUserThinkWhiteWon;
+function isUserEvaluationValid(
+  doUserThinkWhiteWon: boolean,
+  tactic: WhoWinsModel
+) {
+  if (tactic.eval.includes("#")) {
+    return tactic.eval.includes("-") !== doUserThinkWhiteWon;
   }
-  const doWhiteWon = parseInt(realEval) >= 0;
+
+  //For stockfish, the evaluation is relative to the camp that has to play
+  const oppositeSideWon = parseInt(tactic.eval) < 0;
+  const isWhiteCamp = tactic.fen.split(" ")[1] == "w";
+  const doWhiteWon =
+    (isWhiteCamp === true && oppositeSideWon === false) ||
+    (isWhiteCamp === false && oppositeSideWon === true);
   return doUserThinkWhiteWon === doWhiteWon;
 }
 
-function evalToString(evaluation: string) {
+function evalToString(evaluation: string, tactic: WhoWinsModel) {
+  //For stockfish, the evaluation is relative to the camp that has to play
+  const isWhiteCamp = tactic.fen.split(" ")[1] == "w";
   if (evaluation.includes("#")) {
-    if (evaluation.includes("-")) {
+    if (
+      (evaluation.includes("-") && isWhiteCamp) ||
+      (evaluation.includes("-") === false && isWhiteCamp === false)
+    ) {
       return `mat in ${evaluation.replace("#-", "")} for black`;
     }
     return `mat in ${evaluation.replace("#", "")} for white`;
+  }
+  if (isWhiteCamp === false) {
+    return (-1 * parseFloat(evaluation)) / 100;
   }
   return parseFloat(evaluation) / 100;
 }
