@@ -22,14 +22,16 @@ function* receiveUserGuessWhoWinsSaga(action: ReceiveUserGuessWhoWinsAction) {
     action.incrementScore();
     message.success(
       `Correct! The engine evaluation for this position is ${evalToString(
-        currentTactic.eval, currentTactic
+        currentTactic.eval,
+        currentTactic
       )}.`
     );
     yield put(popWhoWinsTacticsAction());
   } else {
     action.onUserGuessFailure(
       `Game over! The engine evaluation for this position is ${evalToString(
-        currentTactic.eval, currentTactic
+        currentTactic.eval,
+        currentTactic
       )}.`
     );
   }
@@ -39,12 +41,8 @@ function isUserEvaluationValid(
   doUserThinkWhiteWon: boolean,
   tactic: WhoWinsModel
 ) {
-  if (tactic.eval.includes("#")) {
-    return tactic.eval.includes("-") !== doUserThinkWhiteWon;
-  }
-
   //For stockfish, the evaluation is relative to the camp that has to play
-  const oppositeSideWon = parseInt(tactic.eval) < 0;
+  const oppositeSideWon = parseInt(tactic.eval.replace("#", "")) < 0;
   const isWhiteCamp = tactic.fen.split(" ")[1] == "w";
   const doWhiteWon =
     (isWhiteCamp === true && oppositeSideWon === false) ||
