@@ -16,7 +16,7 @@ function* receiveUserGuessWhoWinsSaga(action: ReceiveUserGuessWhoWinsAction) {
     (state) => state.tactics.whoWins.current
   );
   if (tactics.length < 10) {
-    put(fetchRandomWhoWinsTacticsAction(20));
+    yield put(fetchRandomWhoWinsTacticsAction(20));
   }
   if (isUserEvaluationValid(action.isWhiteWinning, currentTactic)) {
     action.incrementScore();

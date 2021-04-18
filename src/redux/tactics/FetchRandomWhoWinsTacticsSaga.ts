@@ -7,12 +7,19 @@ import {
   receiveWhoWinsTacticsAction,
 } from "./WhoWinsTacticsActions";
 
-function* fetchRandomWhoWinsTacticsSaga(action: FetchRandomWhoWinsTacticsAction) {
+function* fetchRandomWhoWinsTacticsSaga(
+  action: FetchRandomWhoWinsTacticsAction
+) {
   try {
-    const tactics: { [key: string]: WhoWinsModel } = yield call(
+    let tactics: { [key: string]: WhoWinsModel } = yield call(
       getRandomWhoWinsTactics,
       action.nbrTactics
     );
+    //Hack: filter tactics that are in mate position, should be fixed in the DB instead
+    tactics = Object.keys(tactics).reduce((filtered: any, key: string) => {
+      if (tactics[key].eval != "#0") filtered[key] = tactics[key];
+      return filtered;
+    }, {});
     yield put(receiveWhoWinsTacticsAction(tactics));
   } catch (e) {
     console.log(e.message);

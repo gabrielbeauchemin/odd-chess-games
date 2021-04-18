@@ -22,6 +22,7 @@ export function WhoWinsGame(props: WhoWinsGameProps) {
   const [bestScore, setBestScore] = useState(0);
   const onUserGuessFailure = (message: string) => {
     if (score > bestScore) setBestScore(score);
+    setScore(0);
     setGameStarted(false);
     setCounterId(undefined);
     Modal.error({
@@ -41,6 +42,7 @@ export function WhoWinsGame(props: WhoWinsGameProps) {
                 setGameStarted(false);
                 setCounterId(undefined);
                 if (score > bestScore) setBestScore(score);
+                setScore(0);
                 Modal.info({
                   title: `Finished! Your score is ${score}.`,
                   content: null,
