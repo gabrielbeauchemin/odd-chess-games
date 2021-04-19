@@ -14,9 +14,14 @@ export function WelcomePage() {
         </p>
         <br />
         <div className={style.GameImages}>
-          <div>
+          <div className={style.GameImage}>
             <a href="/who-wins">
               <img src="whowins.png" width="100%" />
+            </a>
+          </div>
+          <div className={style.GameImage}>
+            <a href="/is-it-draw">
+              <img src="isitdraw.png" width="100%" />
             </a>
           </div>
         </div>

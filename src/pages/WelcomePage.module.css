@@ -1,9 +1,9 @@
-.GameImages{
-    display: flex;
-    width: 25%;
-    justify-content: space-evenly;
+.GameImages {
+  display: flex;
+  width: 50%;
+  justify-content: space-evenly;
 }
 
-.GameImage{
-    width: 30%;
+.GameImage {
+  margin: 10px;
 }
