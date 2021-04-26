@@ -1,35 +1,35 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { IsItDrawGame } from "../components/IsItDrawGame";
-import { WhoWinsModel } from "../redux/tactics/WhoWinsModel";
+import { IsItDrawModel } from "../redux/tactics/IsItDrawModel";
 import {
-  fetchRandomWhoWinsTacticsAction,
-  popWhoWinsTacticsAction,
-  receiveUserGuessWhoWinsAction,
-} from "../redux/tactics/WhoWinsTacticsActions";
+  fetchRandomIsItDrawTacticsAction,
+  popIsItDrawTacticsAction,
+  receiveUserGuessIsItDrawAction,
+} from "../redux/tactics/IsItDrawTacticsActions";
 import { RootState } from "../store";
 import { Page } from "./Page";
 import { PageContent } from "./PageContent";
 
 type WhoWinsGamePageProps = {
-  currentTactic: WhoWinsModel | null;
-  fetchRandomWhoWinsTactics: () => void;
-  popWhoWinsTactics: () => void;
+  currentTactic: IsItDrawModel | null;
+  fetchRandomIsItDrawTactics: () => void;
+  popIsItDrawTactics: () => void;
   receiveUserGuess: (
-    isWhiteWinning: boolean,
+    isItDrawUserGuess: boolean,
     incrementScore: () => void,
     onUserGuessFailure: (message: string) => void
   ) => void;
 };
 
 function IsItDrawGamePage(props: WhoWinsGamePageProps) {
-  useEffect(props.fetchRandomWhoWinsTactics, []);
+  useEffect(props.fetchRandomIsItDrawTactics, []);
   return (
     <Page>
       <PageContent>
         <IsItDrawGame
           currentTactic={props.currentTactic}
-          popWhoWinsTactics={props.popWhoWinsTactics}
+          popIsItDrawTactics={props.popIsItDrawTactics}
           receiveUserGuess={props.receiveUserGuess}
         />
       </PageContent>
@@ -39,25 +39,25 @@ function IsItDrawGamePage(props: WhoWinsGamePageProps) {
 
 function mapStateToProps(state: RootState) {
   return {
-    currentTactic: state.tactics.whoWins.current,
+    currentTactic: state.tactics.isItDraw.current,
   };
 }
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    fetchRandomWhoWinsTactics: () => {
-      dispatch(fetchRandomWhoWinsTacticsAction(20));
+    fetchRandomIsItDrawTactics: () => {
+      dispatch(fetchRandomIsItDrawTacticsAction(20));
     },
-    popWhoWinsTactics: () => {
-      dispatch(popWhoWinsTacticsAction());
+    popIsItDrawTactics: () => {
+      dispatch(popIsItDrawTacticsAction());
     },
     receiveUserGuess: (
-      isWhiteWinning: boolean,
+      isItDrawUserGuess: boolean,
       incrementScore: () => void,
       onUserGuessFailure: (message: string) => void
     ) => {
       dispatch(
-        receiveUserGuessWhoWinsAction(
-          isWhiteWinning,
+        receiveUserGuessIsItDrawAction(
+          isItDrawUserGuess,
           incrementScore,
           onUserGuessFailure
         )

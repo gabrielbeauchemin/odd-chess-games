@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { WhoWinsGame } from "../components/WhoWinsGame";
+import {fetchRandomIsItDrawTacticsAction} from "../redux/tactics/IsItDrawTacticsActions";
 import { WhoWinsModel } from "../redux/tactics/WhoWinsModel";
 import {
-  fetchRandomWhoWinsTacticsAction,
   popWhoWinsTacticsAction,
   receiveUserGuessWhoWinsAction,
 } from "../redux/tactics/WhoWinsTacticsActions";
@@ -13,7 +13,7 @@ import { PageContent } from "./PageContent";
 
 type WhoWinsGamePageProps = {
   currentTactic: WhoWinsModel | null;
-  fetchRandomWhoWinsTactics: () => void;
+  fetchRandomIsItDrawTactics: () => void;
   popWhoWinsTactics: () => void;
   receiveUserGuess: (
     isWhiteWinning: boolean,
@@ -23,7 +23,7 @@ type WhoWinsGamePageProps = {
 };
 
 function WhoWinsGamePage(props: WhoWinsGamePageProps) {
-  useEffect(props.fetchRandomWhoWinsTactics, []);
+  useEffect(props.fetchRandomIsItDrawTactics, []);
   return (
     <Page>
       <PageContent>
@@ -44,8 +44,8 @@ function mapStateToProps(state: RootState) {
 }
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    fetchRandomWhoWinsTactics: () => {
-      dispatch(fetchRandomWhoWinsTacticsAction(20));
+    fetchRandomIsItDrawTactics: () => {
+      dispatch(fetchRandomIsItDrawTacticsAction(20));
     },
     popWhoWinsTactics: () => {
       dispatch(popWhoWinsTacticsAction());

@@ -1,7 +1,9 @@
 import { Button, Modal } from "antd";
 import React, { useState } from "react";
 import { WhoWinsModel } from "../redux/tactics/WhoWinsModel";
-import { uuidv4 } from "../util/uuid";
+import {getSideToPlayFromFen} from "../util/ChessFunctions";
+import {toTitleCase} from "../util/StringFunctions";
+import { uuidv4 } from "../util/Uuid";
 import { ChessBoard } from "./ChessBoard";
 import { MinutesCounter } from "./MinutesCounter";
 
@@ -127,17 +129,4 @@ export function WhoWinsGame(props: WhoWinsGameProps) {
       </div>
     </>
   );
-}
-
-function getSideToPlayFromFen(fen: string | undefined) {
-  if (fen === undefined || fen.split(" ")[1] == "w") {
-    return "white";
-  }
-  return "black";
-}
-
-function toTitleCase(str: string) {
-  return str.replace(/\w\S*/g, function (txt) {
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-  });
 }

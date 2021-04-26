@@ -1,15 +1,17 @@
 import { Button, Modal } from "antd";
 import React, { useState } from "react";
-import { WhoWinsModel } from "../redux/tactics/WhoWinsModel";
-import { uuidv4 } from "../util/uuid";
+import { IsItDrawModel } from "../redux/tactics/IsItDrawModel";
+import {getSideToPlayFromFen} from "../util/ChessFunctions";
+import {toTitleCase} from "../util/StringFunctions";
+import { uuidv4 } from "../util/Uuid";
 import { ChessBoard } from "./ChessBoard";
 import { MinutesCounter } from "./MinutesCounter";
 
 type Props = {
-  currentTactic: WhoWinsModel | null;
-  popWhoWinsTactics: () => void;
+  currentTactic: IsItDrawModel | null;
+  popIsItDrawTactics: () => void;
   receiveUserGuess: (
-    isWhiteWinning: boolean,
+    isItDrawUserGuess: boolean,
     incrementScore: () => void,
     onUserGuessFailure: (message: string) => void
   ) => void;
@@ -72,7 +74,7 @@ export function IsItDrawGame(props: Props) {
           <div>
             <div>
               {toTitleCase(getSideToPlayFromFen(props.currentTactic.fen))} to
-              play. Who should win?
+              play. Is it a draw?
             </div>
             <div className="flex" style={{ justifyContent: "space-evenly" }}>
               <Button
@@ -86,7 +88,7 @@ export function IsItDrawGame(props: Props) {
                   )
                 }
               >
-                White
+                Yes
               </Button>
               <Button
                 size="large"
@@ -99,22 +101,22 @@ export function IsItDrawGame(props: Props) {
                   )
                 }
               >
-                Black
+                No
               </Button>
             </div>
           </div>
         ) : (
           <div>
             <div>
-              Find if the position is likely a draw as many times as possible in three
-              minutes.
+              Find if the position is likely a draw as many times as possible in
+              three minutes.
             </div>
             <div>Don't be mistaken or it is game over.</div>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <Button
                 size="large"
                 onClick={() => {
-                  props.popWhoWinsTactics();
+                  props.popIsItDrawTactics();
                   setGameStarted(true);
                   setCounterId(uuidv4());
                 }}
@@ -127,17 +129,4 @@ export function IsItDrawGame(props: Props) {
       </div>
     </>
   );
-}
-
-function getSideToPlayFromFen(fen: string | undefined) {
-  if (fen === undefined || fen.split(" ")[1] == "w") {
-    return "white";
-  }
-  return "black";
-}
-
-function toTitleCase(str: string) {
-  return str.replace(/\w\S*/g, function (txt) {
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-  });
 }

@@ -7,7 +7,7 @@ export function WelcomePage() {
   return (
     <Page>
       <PageContent>
-        <h3>Welcome</h3>
+        <h3>Welcome!</h3>
         <p>
           You will find on this site special chess games that I could not find
           else where. Enjoy!

@@ -7,3 +7,12 @@ export async function getRandomWhoWinsTactics(nbrTactics: number) {
     return console.log(e);
   }
 }
+export async function getRandomIsItDrawTactics(nbrTactics: number) {
+  const url = `https://chess-db-d4956-default-rtdb.firebaseio.com/draw-tactics/tactics.json?orderBy="random"&limitToFirst=${nbrTactics}&startAt=${Math.random()}`;
+  try {
+    const res = await fetch(url);
+    return await res.json();
+  } catch (e) {
+    return console.log(e);
+  }
+}

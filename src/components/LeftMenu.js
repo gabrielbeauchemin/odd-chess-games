@@ -14,7 +14,7 @@ const LeftMenu = () => {
         <Menu.Item key="setting:1" onClick={() => history.push("/who-wins")}>
           Who wins?
         </Menu.Item>
-        <Menu.Item key="setting:1" onClick={() => history.push("/is-it-draw")}>
+        <Menu.Item key="setting:2" onClick={() => history.push("/is-it-draw")}>
           Is it draw?
         </Menu.Item>
       </SubMenu>
