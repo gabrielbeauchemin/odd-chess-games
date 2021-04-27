@@ -27,11 +27,9 @@ function* fetchRandomWhoWinsTacticsSaga(
   }
 }
 
-function* watchFetchRandomWhoWinsTacticsSaga() {
+export default function* watchFetchRandomWhoWinsTacticsSaga() {
   yield takeLatest(
     FETCH_RANDOM_WHO_WINS_TACTICS_ACTION,
     fetchRandomWhoWinsTacticsSaga
   );
 }
-
-export default watchFetchRandomWhoWinsTacticsSaga;
