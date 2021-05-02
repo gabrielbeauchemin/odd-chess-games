@@ -24,7 +24,8 @@ function* receiveUserGuessWhoWinsSaga(action: ReceiveUserGuessWhoWinsAction) {
       `Correct! The engine evaluation for this position is ${evalToString(
         currentTactic.eval,
         currentTactic
-      )}.`
+      )}.`,
+      6
     );
     yield put(popWhoWinsTacticsAction());
   } else {

@@ -15,15 +15,23 @@ function* receiveUserGuessIsItDrawSaga(action: ReceiveUserGuessIsItDrawAction) {
   const currentTactic: IsItDrawModel = yield select(
     (state) => state.tactics.isItDraw.current
   );
+
   if (tactics.length < 10) {
     yield put(fetchRandomIsItDrawTacticsAction(20));
   }
+
   if (action.isItDrawUserGuess === currentTactic.isItDraw) {
     action.incrementScore();
     message.success(`Correct!`);
     yield put(popIsItDrawTacticsAction());
   } else {
-    action.onUserGuessFailure(`Game over!`);
+    if (currentTactic.eval !== undefined) {
+      action.onUserGuessFailure(
+        `Game over! The evaluation was ${parseInt(currentTactic.eval) / 100.0}.`
+      );
+    } else {
+      action.onUserGuessFailure("Game over!");
+    }
   }
 }
 

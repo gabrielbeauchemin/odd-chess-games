@@ -36,7 +36,11 @@ function* fetchIsItDrawTacticsSaga(action: FetchRandomIsItDrawTacticsAction) {
           Object.keys(acc).length < action.nbrTactics / 2 &&
           countNbrPieces(whoWinsTactics[key].fen) < 16
         ) {
-          acc[key] = { fen: whoWinsTactics[key].fen, isItDraw: false };
+          acc[key] = {
+            fen: whoWinsTactics[key].fen,
+            isItDraw: false,
+            eval: whoWinsTactics[key].eval,
+          };
         }
         return acc;
       }, {}),
